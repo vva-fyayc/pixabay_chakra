@@ -4,15 +4,16 @@ import useGetImages from '../helpers/hooks/useGetImages';
 import { useSetRecoilState } from 'recoil';
 import imageData from '../state/atoms/imageData';
 import ImageCardList from '../components/ImageCardList';
+import SearchInfo from '../components/SearchInfo/SearchInfo';
 
 
 const ImageContainer = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [val, setVal] = useState('');
+  const [oldSearchTerm, setOldSearchTerm] = useState('');
   const [shouldFetch, setShouldFetch] = useState(false);
   const setImageDataState = useSetRecoilState(imageData);
 
-  const { data, error, setSize, hasNext } = useGetImages(val, shouldFetch);
+  const { data, error, setSize, hasNext } = useGetImages(oldSearchTerm, shouldFetch);
 
   useEffect(() => {
     setImageDataState(data);
@@ -25,7 +26,7 @@ const ImageContainer = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     setSize(1);
-    setVal(searchTerm);
+    setOldSearchTerm(searchTerm);
     setShouldFetch(true);
   }
 
@@ -51,7 +52,7 @@ const ImageContainer = () => {
         </Center>
 
         <Box>
-          {data && <Text mb="30px" fontSize="4xl" align="center">You can see {data[0].totalHits} images for {val}</Text>}
+          <SearchInfo searchTerm={oldSearchTerm} />
         </Box>
 
         <Wrap justify="center">
