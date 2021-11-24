@@ -1,15 +1,22 @@
-import { useState } from 'react';
-import { FormControl, FormErrorMessage, Input, Button, Center, Box, Text, HStack, VStack, Container, Wrap, WrapItem } from '@chakra-ui/react';
-import ImageCard from '../components/ImageCard';
+import { useState, useEffect } from 'react';
+import { FormControl, FormErrorMessage, Input, Button, Center, Box, Text, HStack, VStack, Container, Wrap } from '@chakra-ui/react';
 import useGetImages from '../helpers/hooks/useGetImages';
+import useStore from '../store';
+import ImageCardList from '../components/ImageCardList/ImageCardList';
+import SearchInfo from '../components/SearchInfo';
 
 const ImageContainer = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [val, setVal] = useState('');
+  const [oldSearchTerm, setOldSearchTerm] = useState('');
   const [shouldFetch, setShouldFetch] = useState(false);
+  const setImageData = useStore(state => state.setImageData);
 
-  const { data, error, setSize, hasNext } = useGetImages(val, shouldFetch);
+  const { data, error, setSize, hasNext } = useGetImages(oldSearchTerm, shouldFetch);
   
+  useEffect(() => {
+    setImageData(data);
+  }, [data, setImageData]);
+
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
   }
@@ -17,9 +24,11 @@ const ImageContainer = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     setSize(1);
-    setVal(searchTerm);
+    setOldSearchTerm(searchTerm);
     setShouldFetch(true);
   }
+
+  
 
   if (error) return <p>Server error</p>
 
@@ -43,19 +52,11 @@ const ImageContainer = () => {
         </Center>
 
         <Box>
-          {data && <Text mb="30px" fontSize="4xl" align="center">You can see {data[0].totalHits} images for {val}</Text>}
+          <SearchInfo searchTerm={oldSearchTerm} />
         </Box>
 
         <Wrap justify="center">
-          {data && data.map(page => {
-            return page.hits.map(image => {
-              return (
-                <WrapItem key={image.id}>
-                  <ImageCard image={image} />
-                </WrapItem>
-              );
-            })
-          })}
+          <ImageCardList />
         </Wrap>
 
         <Box>
