@@ -1,6 +1,6 @@
 import React from 'react';
-import { Box, Image, Text, Avatar } from "@chakra-ui/react";
-import { Flex, Spacer } from "@chakra-ui/react";
+import { Box, Image, Text, Avatar } from '@chakra-ui/react';
+import { Flex, Spacer } from '@chakra-ui/react';
 
 const ImageCard = ({ image }) => {
     return (

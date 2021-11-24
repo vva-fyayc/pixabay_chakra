@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FormControl, FormErrorMessage, Input, Button, Center, Box, Text, HStack, VStack, Container, Wrap, WrapItem } from "@chakra-ui/react";
+import { FormControl, FormErrorMessage, Input, Button, Center, Box, Text, HStack, VStack, Container, Wrap, WrapItem } from '@chakra-ui/react';
 import ImageCard from '../components/ImageCard';
 import useGetImages from '../helpers/hooks/useGetImages';
 

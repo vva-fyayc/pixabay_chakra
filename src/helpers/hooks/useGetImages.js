@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import useSWRInfinite from 'swr/infinite';
-import { IMAGE_TYPE_PHOTO, IMAGES_NUMBER_OF_RETRIES, IMAGES_PER_PAGE } from "../../common/constants";
+import { IMAGE_TYPE_PHOTO, IMAGES_NUMBER_OF_RETRIES, IMAGES_PER_PAGE } from '../../common/constants';
 
 
 export const useGetImages = (searchTerm, shouldFetch = false) => {
