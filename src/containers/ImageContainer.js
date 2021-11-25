@@ -5,10 +5,10 @@ import useGetImages from '../helpers/hooks/useGetImages';
 
 const ImageContainer = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [val, setVal] = useState('');
+  const [oldSearchTerm, setOldSearchTerm] = useState('');
   const [shouldFetch, setShouldFetch] = useState(false);
 
-  const { data, error, setSize, hasNext } = useGetImages(val, shouldFetch);
+  const { data, error, setSize, hasNext } = useGetImages(oldSearchTerm, shouldFetch);
   
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
@@ -17,7 +17,7 @@ const ImageContainer = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     setSize(1);
-    setVal(searchTerm);
+    setOldSearchTerm(searchTerm);
     setShouldFetch(true);
   }
 
@@ -43,7 +43,7 @@ const ImageContainer = () => {
         </Center>
 
         <Box>
-          {data && <Text mb="30px" fontSize="4xl" align="center">You can see {data[0].totalHits} images for {val}</Text>}
+          {data && <Text mb="30px" fontSize="4xl" align="center">You can see {data[0].totalHits} images for {oldSearchTerm}</Text>}
         </Box>
 
         <Wrap justify="center">
